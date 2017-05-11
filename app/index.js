@@ -1,5 +1,14 @@
-import hello from './hello';
+import React from 'react';
+import {render} from 'react-dom';
 
-var x = hello();
+class App extends React.Component {
+  
+  render() {
+    return (
+      <div>Hello react!</div>
+    );
+  }
 
-console.log(x);
+}
+
+render(<App />, document.getElementById('root'));
