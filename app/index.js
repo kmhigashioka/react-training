@@ -1,4 +1,4 @@
-var hello = require('./hello');
+import hello from './hello';
 
 var x = hello();
 
