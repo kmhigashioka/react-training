@@ -7,8 +7,13 @@ class Todo extends React.Component {
       <div>
         <label>Task :</label>
         <p>{this.props.todo.task}</p>
+        <button type="button" onClick={this.toggleDone.bind(this)}>Set to {this.props.todo.done ? 'Undone' : 'Done'}</button>
       </div>
     );
+  }
+
+  toggleDone() {
+    this.props.todo.done = !this.props.todo.done;
   }
   
 }
