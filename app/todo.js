@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Todo extends React.Component {
 
@@ -30,5 +31,9 @@ class Todo extends React.Component {
   }
   
 }
+
+Todo.propTypes = {
+  todo: PropTypes.object
+};
 
 export default Todo;
