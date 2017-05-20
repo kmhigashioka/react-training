@@ -15,7 +15,10 @@ class Todo extends React.Component {
     return (
       <div>
         <label>Task :</label>
-        <p>{this.props.todo.task}</p>
+        <input
+          defaultValue={this.props.todo.task} 
+          onChange={this.handleChangeTask.bind(this)}
+          ref="task" />
         <button type="button" 
                 onClick={this.toggleDone.bind(this)}>
           Set to {this.state.done ? 'Undone' : 'Done'}
@@ -29,11 +32,16 @@ class Todo extends React.Component {
       done: !this.state.done
     });
   }
+
+  handleChangeTask() {
+    this.props.changeTask(this.props.todo, this.refs.task.value);
+  }
   
 }
 
 Todo.propTypes = {
-  todo: PropTypes.object
+  todo: PropTypes.object,
+  changeTask: PropTypes.func
 };
 
 export default Todo;
