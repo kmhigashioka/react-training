@@ -1,19 +1,20 @@
 import React from 'react';
 import {render} from 'react-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import Header from './header';
-import Content from './content';
-import Footer from './footer';
+import Route from './route';
+
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
+injectTapEventPlugin();
 
 class App extends React.Component {
   
   render() {
     return (
-      <div>
-        <Header />
-        <Content />
-        <Footer />
-      </div>
+      <MuiThemeProvider>
+        <Route />
+      </MuiThemeProvider>
     );
   }
 
