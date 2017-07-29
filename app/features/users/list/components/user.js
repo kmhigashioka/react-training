@@ -28,7 +28,18 @@ const styles = {
       description: {
         margin: 0
       }
+    },
 
+    contentContainer: {
+
+      emptyPlaceholderContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+
+        message: { margin: 0 }
+      }
     }
 
   }
@@ -65,9 +76,22 @@ class User extends React.Component {
           <small style={styles.container.headerContainer.description}>{user.description}</small>
         </section>
         <Divider />
-        <section>
+        <section style={styles.container.contentContainer}>
           <List>
             <Subheader>Todos</Subheader>
+
+            { user.todos.length > 0
+              ? null
+              : <div style={styles.container.contentContainer.emptyPlaceholderContainer}>
+                  
+                    <ActionAssignment
+                      style={{color: blue500, height: '40px', width: '40px'}} />
+                    <p style={styles.container.contentContainer.emptyPlaceholderContainer.message}>
+                      No more todos. Good job!
+                    </p>
+                  
+                </div>
+            }
             
             { user.todos.map((t, i) => {
 

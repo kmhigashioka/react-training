@@ -13,25 +13,21 @@ const styles = {
     justifyContent: 'center',
     margin: '40px 0',
 
-    backContainer: {
-      padding: '20px',
-      marginBottom: '20px',
-
-      back: {
-        display: 'flex',
-        alignItems: 'center'
-      }
-    },
-
     userContainer: {
       display: 'flex',
       flexDirection: 'column',
       maxWidth: '60vw',
       width: '100%',
 
-      search: {
-        marginBottom: '20px'
-      }
+      backContainer: {
+        padding: '20px',
+        marginBottom: '20px',
+
+        back: {
+          display: 'flex',
+          alignItems: 'center'
+        }
+      },
     },
 
     fab: {
@@ -96,15 +92,14 @@ class View extends React.Component {
   render() {
     return (
       <div style={styles.container}>
-        <div>
-          <Paper style={styles.container.backContainer}>
-            <Link to="/" style={styles.container.backContainer.back}>
-              <ChevronLeft />
-              Back to Users
-            </Link>
-          </Paper>
-          
           <div style={styles.container.userContainer}>
+            <Paper style={styles.container.userContainer.backContainer}>
+              <Link to="/" style={styles.container.userContainer.backContainer.back}>
+                <ChevronLeft />
+                Back to Users
+              </Link>
+            </Paper>
+
             <User
               user={this.state.user}
               onRemoveTask={this.onRemoveTask.bind(this)}
@@ -115,7 +110,6 @@ class View extends React.Component {
             onTouchTap={this.addTodo.bind(this)}>
             <ContentAdd />
           </FloatingActionButton>
-        </div>
       </div>
     );
   }
