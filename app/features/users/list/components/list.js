@@ -1,5 +1,6 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
+import Paper from 'material-ui/Paper';
 
 import User from './user';
 
@@ -15,8 +16,13 @@ const styles = {
       maxWidth: '60vw',
       width: '100%',
 
-      search: {
-        marginBottom: '20px'
+      searchContainer: {
+        padding: '0 20px',
+        marginBottom: '20px',
+
+        search: {
+          marginBottom: '20px'
+        }
       }
     }
   }
@@ -56,12 +62,14 @@ class UsersList extends React.Component {
     return (
       <div style={styles.container}>
         <div style={styles.container.usersContainer}>
-          <TextField
-            name="search"
-            floatingLabelText="Search Todo"
-            hintText="Wash some dishes, Write a blog"
-            fullWidth={true}
-            style={styles.container.usersContainer.search} />
+          <Paper style={styles.container.usersContainer.searchContainer}>
+            <TextField
+              name="search"
+              floatingLabelText="Search Todo"
+              hintText="Wash some dishes, Write a blog"
+              fullWidth={true}
+              style={styles.container.usersContainer.searchContainer.search} />
+          </Paper>
 
           { this.state.users.map((t, i) => {
             return (
