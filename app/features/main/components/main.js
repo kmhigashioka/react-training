@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Header from './header';
-import Content from './content';
 
 class Main extends React.Component {
   
@@ -11,7 +10,6 @@ class Main extends React.Component {
     return (
       <div>
         <Header />
-        <Content />
         {children}
       </div>
     );
