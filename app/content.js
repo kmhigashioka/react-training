@@ -1,9 +1,24 @@
 import React from 'react';
-import Todo from './todo';
+import TextField from 'material-ui/TextField';
+
+import User from './user';
 
 const styles = {
   container: {
-    margin: '20px'
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '20px 0',
+
+    usersContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      maxWidth: '60vw',
+      width: '100%',
+
+      search: {
+        marginBottom: '20px'
+      }
+    }
   }
 };
 
@@ -13,40 +28,46 @@ class Content extends React.Component {
     super();
 
     this.state = {
-      todos: [
-        { task: 'Write code.', done: true },
-        { task: 'Merge pull request', done: false },
-        { task: 'Raise an issue', done: false }
+      users: [
+        { 
+          name: 'Juan Dela Cruz',
+          description: 'Tall, dark and handsome.',
+          todos: [
+            { task: 'Write code.', done: true, date: new Date('7/29/2017') },
+            { task: 'Merge pull request', done: false, date: new Date('7/29/2017') },
+            { task: 'Raise an issue', done: false, date: new Date('7/30/2017') }
+          ]
+        },
+        { 
+          name: 'April Santos',
+          description: 'Strong and independent woman.',
+          todos: [
+            { task: 'Eat some fries', done: true, date: new Date('7/29/2017') },
+            { task: 'Study React', done: false, date: new Date('7/30/2017') }
+          ]
+        }
       ]
     };
-  }
-
-  changeTask(oldTodo, newTask) {
-    const newTodos = this.state.todos.map(t => {
-      if (t == oldTodo) {
-        t.task = newTask;
-      }
-
-      return t;
-    });
-
-    this.setState({
-      todos: newTodos
-    });
   }
   
   render() {
     return (
       <div style={styles.container}>
-        { 
-          this.state.todos
-            //.filter(t => {
-            //  return t.done == true;
-            //})
-            .map((t, index) => {
-              return <Todo key={index} todo={t} changeTask={this.changeTask.bind(this)} />;
+        <div style={styles.container.usersContainer}>
+          <TextField
+            name="search"
+            floatingLabelText="Search Todo"
+            hintText="Wash some dishes, Write a blog"
+            fullWidth={true}
+            style={styles.container.usersContainer.search} />
+
+          { this.state.users.map((t, i) => {
+            return (
+                <User key={i} user={t} />
+              );
             })
-        }
+          }
+        </div>
       </div>
     );
   }
