@@ -1,6 +1,9 @@
 import React from 'react';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import { browserHistory, Link } from 'react-router';
+import Paper from 'material-ui/Paper';
+import ChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 
 import User from '../../list/components/user';
 
@@ -8,7 +11,17 @@ const styles = {
   container: {
     display: 'flex',
     justifyContent: 'center',
-    margin: '20px 0',
+    margin: '40px 0',
+
+    backContainer: {
+      padding: '20px',
+      marginBottom: '20px',
+
+      back: {
+        display: 'flex',
+        alignItems: 'center'
+      }
+    },
 
     userContainer: {
       display: 'flex',
@@ -22,7 +35,7 @@ const styles = {
     },
 
     fab: {
-      position: 'absolute',
+      position: 'fixed',
       bottom: '40px',
       right: '40px'
     }
@@ -76,18 +89,33 @@ class View extends React.Component {
     });
   }
 
+  addTodo() {
+    browserHistory.push(`/users/${this.state.user.id}/todos/new`);
+  }
+
   render() {
     return (
       <div style={styles.container}>
-        <div style={styles.container.userContainer}>
-          <User
-            user={this.state.user}
-            onRemoveTask={this.onRemoveTask.bind(this)}
-            onTagAsDoneUndone={this.onTagAsDoneUndone.bind(this)} />
+        <div>
+          <Paper style={styles.container.backContainer}>
+            <Link to="/" style={styles.container.backContainer.back}>
+              <ChevronLeft />
+              Back to Users
+            </Link>
+          </Paper>
+          
+          <div style={styles.container.userContainer}>
+            <User
+              user={this.state.user}
+              onRemoveTask={this.onRemoveTask.bind(this)}
+              onTagAsDoneUndone={this.onTagAsDoneUndone.bind(this)} />
+          </div>
+          <FloatingActionButton
+            style={styles.container.fab}
+            onTouchTap={this.addTodo.bind(this)}>
+            <ContentAdd />
+          </FloatingActionButton>
         </div>
-        <FloatingActionButton style={styles.container.fab}>
-          <ContentAdd />
-        </FloatingActionButton>
       </div>
     );
   }
