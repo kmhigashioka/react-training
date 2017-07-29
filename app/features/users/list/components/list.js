@@ -33,29 +33,49 @@ class UsersList extends React.Component {
   constructor() {
     super();
 
+    const users = [
+      { 
+        id: 1,
+        name: 'Juan Dela Cruz',
+        description: 'Tall, dark and handsome.',
+        todos: [
+          { task: 'Write code.', done: true, date: new Date('7/29/2017') },
+          { task: 'Merge pull request', done: false, date: new Date('7/29/2017') },
+          { task: 'Raise an issue', done: false, date: new Date('7/30/2017') }
+        ]
+      },
+      { 
+        id: 2,
+        name: 'April Santos',
+        description: 'Strong and independent woman.',
+        todos: [
+          { task: 'Eat some fries', done: true, date: new Date('7/29/2017') },
+          { task: 'Study React', done: false, date: new Date('7/30/2017') }
+        ]
+      }
+    ];
+
     this.state = {
-      users: [
-        { 
-          id: 1,
-          name: 'Juan Dela Cruz',
-          description: 'Tall, dark and handsome.',
-          todos: [
-            { task: 'Write code.', done: true, date: new Date('7/29/2017') },
-            { task: 'Merge pull request', done: false, date: new Date('7/29/2017') },
-            { task: 'Raise an issue', done: false, date: new Date('7/30/2017') }
-          ]
-        },
-        { 
-          id: 2,
-          name: 'April Santos',
-          description: 'Strong and independent woman.',
-          todos: [
-            { task: 'Eat some fries', done: true, date: new Date('7/29/2017') },
-            { task: 'Study React', done: false, date: new Date('7/30/2017') }
-          ]
-        }
-      ]
+      users: users,
+      filteredUsers: users
     };
+  }
+
+  filterUserWithTask(event) {
+    if (event.target.value == '') {
+      this.setState({
+        filteredUsers: this.state.users
+      });
+      return;
+    }
+
+    this.setState({
+      filteredUsers: this.state.users.filter(t => {
+        return t.todos.some(u => {
+          return u.task.indexOf(event.target.value) >= 0;
+        });
+      })
+    });
   }
   
   render() {
@@ -68,10 +88,11 @@ class UsersList extends React.Component {
               floatingLabelText="Search Todo"
               hintText="Wash some dishes, Write a blog"
               fullWidth={true}
-              style={styles.container.usersContainer.searchContainer.search} />
+              style={styles.container.usersContainer.searchContainer.search}
+              onChange={this.filterUserWithTask.bind(this)} />
           </Paper>
 
-          { this.state.users.map((t, i) => {
+          { this.state.filteredUsers.map((t, i) => {
             return (
                 <User 
                   key={i} 
