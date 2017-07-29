@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
 
-import User from './user';
+import User from '../../../../shared-components/user/components/user';
 
 const styles = {
   container: {

@@ -5,7 +5,7 @@ import { browserHistory, Link } from 'react-router';
 import Paper from 'material-ui/Paper';
 import ChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 
-import User from '../../list/components/user';
+import User from '../../../../shared-components/user/components/user';
 
 const styles = {
   container: {
