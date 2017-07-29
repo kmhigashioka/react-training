@@ -1,12 +1,13 @@
 import React from 'react';
+import AppBar from 'material-ui/AppBar';
 
 class Header extends React.Component {
   
   render() {
     return (
-      <header>
-        This is a header
-      </header>
+      <AppBar title="Todo List"
+              showMenuIconButton={false}
+              />
     );
   }
 

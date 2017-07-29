@@ -1,6 +1,12 @@
 import React from 'react';
 import Todo from './todo';
 
+const styles = {
+  container: {
+    margin: '20px'
+  }
+};
+
 class Content extends React.Component {
 
   constructor() {
@@ -31,7 +37,7 @@ class Content extends React.Component {
   
   render() {
     return (
-      <div>
+      <div style={styles.container}>
         { 
           this.state.todos
             //.filter(t => {
