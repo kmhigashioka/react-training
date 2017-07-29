@@ -30,6 +30,7 @@ class UsersList extends React.Component {
     this.state = {
       users: [
         { 
+          id: 1,
           name: 'Juan Dela Cruz',
           description: 'Tall, dark and handsome.',
           todos: [
@@ -39,6 +40,7 @@ class UsersList extends React.Component {
           ]
         },
         { 
+          id: 2,
           name: 'April Santos',
           description: 'Strong and independent woman.',
           todos: [
@@ -63,7 +65,10 @@ class UsersList extends React.Component {
 
           { this.state.users.map((t, i) => {
             return (
-                <User key={i} user={t} />
+                <User 
+                  key={i} 
+                  user={t} 
+                  type="navigatable" />
               );
             })
           }
