@@ -90,6 +90,8 @@ class View extends React.Component {
   }
 
   render() {
+    const { user } = this.props;
+
     return (
       <div style={styles.container}>
           <div style={styles.container.userContainer}>
@@ -101,7 +103,7 @@ class View extends React.Component {
             </Paper>
 
             <User
-              user={this.state.user}
+              user={user}
               onRemoveTask={this.onRemoveTask.bind(this)}
               onTagAsDoneUndone={this.onTagAsDoneUndone.bind(this)} />
           </div>
