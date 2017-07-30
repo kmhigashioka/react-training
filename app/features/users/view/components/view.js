@@ -54,7 +54,9 @@ class View extends React.Component {
   }
 
   addTodo() {
-    browserHistory.push(`/users/${this.state.user.id}/todos/new`);
+    const { user } = this.props;
+
+    browserHistory.push(`/users/${user.id}/todos/new`);
   }
 
   render() {

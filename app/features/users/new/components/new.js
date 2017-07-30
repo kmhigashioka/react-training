@@ -1,9 +1,11 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
-import DatePicker from 'material-ui/DatePicker';
+import { TextField, DatePicker } from 'redux-form-material-ui';
 import RaisedButton from 'material-ui/RaisedButton';
 import { browserHistory } from 'react-router';
+import Radium, { StyleRoot } from 'radium';
+import { reduxForm, Field } from 'redux-form';
+import Snackbar from 'material-ui/Snackbar';
 
 const styles = {
   container: {
@@ -43,49 +45,115 @@ const styles = {
   }
 };
 
+const required = value => (value ? undefined : '*Required')
+
+@reduxForm({
+  form: 'usersNewForm'
+})
+@Radium
 class New extends React.Component {
 
-  cancel() {
-    const { routeParams } = this.props;
+  constructor() {
+    super();
 
-    browserHistory.push(`/users/${routeParams.id}`);
+    this.state = {
+      openSnackbar: false,
+      snackbarMessage: ''
+    };
+  }
+
+  cancel() {
+    const { user } = this.props;
+
+    browserHistory.push(`/users/${user.id}`);
+  }
+
+  onRequestCloseSnackbar() {
+    this.setState({
+      openSnackbar: false,
+      snackbarMessage: ''
+    });
+  }
+
+  onOpenSnackbar() {
+    const { user } = this.props;
+
+    this.setState({
+      openSnackbar: true,
+      snackbarMessage: `Todo successfully added for ${user.name}`
+    })
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const { user, handleSubmit } = this.props;
+
+    handleSubmit();
+    this.setState({
+      openSnackbar: true,
+      snackbarMessage: `Successfully added todo for ${user.name}.`
+    })
   }
 
   render() {
+    const { user, handleSubmit, reset } = this.props;
+
     return (
-      <div style={styles.container}>
+      <StyleRoot style={styles.container}>
         <div style={styles.container.userContainer}>
           <Paper>
-            <section style={styles.container.userContainer.headerContainer}>
-              <h2 style={styles.container.userContainer.headerContainer.header}>Add Todo</h2>
-              <small>Add todo for Juan Dela Cruz.</small>
-            </section>
-            <section style={styles.container.userContainer.contentContainer}>
-              <TextField
-                name="task"
-                floatingLabelText="Task"
-                hintText="Compose a song, Play video game"
-                fullWidth={true} />
+            <form onSubmit={this.handleSubmit.bind(this)}>
+              <section style={styles.container.userContainer.headerContainer}>
+                <h2 style={styles.container.userContainer.headerContainer.header}>Add Todo</h2>
+                <small>Add todo for {user.name}.</small>
+              </section>
+              <section style={styles.container.userContainer.contentContainer}>
+                <Field
+                  component={TextField}
+                  name="task"
+                  floatingLabelText="Task"
+                  hintText="Compose a song, Play video game"
+                  fullWidth={true}
+                  validate={required} />
 
-              <DatePicker
-                floatingLabelText="Date"
-                hintText="Date"
-                fullWidth={true}
-                autoOk={true} />
-            </section>
-            <section style={styles.container.userContainer.footerContainer}>
-              <RaisedButton
-                label="ADD"
-                primary={true}
-                style={styles.container.userContainer.footerContainer.button} />
+                <Field
+                  name="date"
+                  component={DatePicker}
+                  floatingLabelText="Date"
+                  hintText="Date"
+                  fullWidth={true}
+                  format={null}
+                  autoOk={true}
+                  validate={required} />
+              </section>
+              <section style={styles.container.userContainer.footerContainer}>
+                <RaisedButton
+                  label="ADD"
+                  primary={true}
+                  type="submit"
+                  style={styles.container.userContainer.footerContainer.button} />
 
-              <RaisedButton
-                label="CANCEL"
-                onTouchTap={this.cancel.bind(this)} />
-            </section>
+                <RaisedButton
+                  label="CLEAR"
+                  secondary={true}
+                  type="button"
+                  onTouchTap={reset}
+                  style={styles.container.userContainer.footerContainer.button} />
+
+                <RaisedButton
+                  label="CANCEL"
+                  onTouchTap={this.cancel.bind(this)} />
+              </section>
+            </form>
           </Paper>
         </div>
-      </div>
+
+        <Snackbar
+          open={this.state.openSnackbar}
+          message={this.state.snackbarMessage}
+          autoHideDuration={4000}
+          onRequestClose={this.onRequestCloseSnackbar.bind(this)} />
+      </StyleRoot>
     );
   }
 
