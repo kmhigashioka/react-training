@@ -11,8 +11,10 @@ import List from '../components/list';
 class UsersListContainer extends React.Component {
 
   render() {
+    const { users } = this.props;
+
     return (
-      <List />
+      <List users={users} />
     );
   }
   
