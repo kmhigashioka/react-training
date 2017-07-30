@@ -12,6 +12,8 @@ import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/MenuItem';
 import { Link } from 'react-router';
+import Radium, { StyleRoot } from 'radium';
+import moment from 'moment';
 
 const styles = {
   container: {
@@ -49,6 +51,7 @@ const types = {
   navigatable: 'navigatable',
 };
 
+@Radium
 class User extends React.Component {
 
   tagAsDoneUndone(todo) {
@@ -67,67 +70,69 @@ class User extends React.Component {
     const { user, type } = this.props;
 
     return (
-      <Paper style={styles.container}>
-        <section style={styles.container.headerContainer}>
-          { type == types.navigatable
-            ? <Link to={`/users/${user.id}`}><h2 style={styles.container.headerContainer.header}>{user.name}</h2></Link>
-            : <h2 style={styles.container.headerContainer.header}>{user.name}</h2>
-          }
-          <small style={styles.container.headerContainer.description}>{user.description}</small>
-        </section>
-        <Divider />
-        <section style={styles.container.contentContainer}>
-          <List>
-            <Subheader>Todos</Subheader>
-
-            { user.todos.length > 0
-              ? null
-              : <div style={styles.container.contentContainer.emptyPlaceholderContainer}>
-                  
-                    <ActionAssignment
-                      style={{color: blue500, height: '40px', width: '40px'}} />
-                    <p style={styles.container.contentContainer.emptyPlaceholderContainer.message}>
-                      No more todos. Good job!
-                    </p>
-                  
-                </div>
+      <StyleRoot>
+        <Paper style={styles.container}>
+          <section style={styles.container.headerContainer}>
+            { type == types.navigatable
+              ? <Link to={`/users/${user.id}`}><h2 style={styles.container.headerContainer.header}>{user.name}</h2></Link>
+              : <h2 style={styles.container.headerContainer.header}>{user.name}</h2>
             }
-            
-            { user.todos.map((t, i) => {
+            <small style={styles.container.headerContainer.description}>{user.description}</small>
+          </section>
+          <Divider />
+          <section style={styles.container.contentContainer}>
+            <List>
+              <Subheader>Todos</Subheader>
 
-                const avatar = t.done
-                  ? <Avatar icon={<Check />} backgroundColor={green500} />
-                  : <Avatar icon={<ActionAssignment />} backgroundColor={blue500} />;
+              { user.todos.length > 0
+                ? null
+                : <div style={styles.container.contentContainer.emptyPlaceholderContainer}>
+                    
+                      <ActionAssignment
+                        style={{color: blue500, height: '40px', width: '40px'}} />
+                      <p style={styles.container.contentContainer.emptyPlaceholderContainer.message}>
+                        No more todos. Good job!
+                      </p>
+                    
+                  </div>
+              }
+              
+              { user.todos.map((t, i) => {
 
-                const rightIconButton = (
-                  <IconMenu iconButtonElement={
-                      <IconButton
-                        touch={true}
-                        tooltip="Actions"
-                        tooltipPosition="bottom-left">
-                          <MoreVertIcon color={grey400} />
-                      </IconButton>
-                    }>
-                    <MenuItem onTouchTap={this.tagAsDoneUndone.bind(this, t)}>Tag as {t.done ? 'undone' : 'done'}</MenuItem>
-                    <MenuItem onTouchTap={this.removeTask.bind(this, t)}>Remove</MenuItem>
-                  </IconMenu>
-                );
+                  const avatar = t.done
+                    ? <Avatar icon={<Check />} backgroundColor={green500} />
+                    : <Avatar icon={<ActionAssignment />} backgroundColor={blue500} />;
 
-                return (
-                  <ListItem
-                    leftAvatar={avatar}
-                    primaryText={t.task}
-                    secondaryText={t.date.toString()}
-                    key={i}
-                    disabled={true}
-                    rightIconButton={type == types.navigatable ? null : rightIconButton}
-                  />
-                );
-              })
-            }
-          </List>
-        </section>
-      </Paper>
+                  const rightIconButton = (
+                    <IconMenu iconButtonElement={
+                        <IconButton
+                          touch={true}
+                          tooltip="Actions"
+                          tooltipPosition="bottom-left">
+                            <MoreVertIcon color={grey400} />
+                        </IconButton>
+                      }>
+                      <MenuItem onTouchTap={this.tagAsDoneUndone.bind(this, t)}>Tag as {t.done ? 'undone' : 'done'}</MenuItem>
+                      <MenuItem onTouchTap={this.removeTask.bind(this, t)}>Remove</MenuItem>
+                    </IconMenu>
+                  );
+
+                  return (
+                    <ListItem
+                      leftAvatar={avatar}
+                      primaryText={t.task}
+                      secondaryText={`${moment(t.date).format('YYYY-MM-DD')} (${moment(t.date).fromNow()})`}
+                      key={i}
+                      disabled={true}
+                      rightIconButton={type == types.navigatable ? null : rightIconButton}
+                    />
+                  );
+                })
+              }
+            </List>
+          </section>
+        </Paper>
+      </StyleRoot>
     );
   }
 
