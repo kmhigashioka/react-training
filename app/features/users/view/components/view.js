@@ -4,6 +4,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import { browserHistory, Link } from 'react-router';
 import Paper from 'material-ui/Paper';
 import ChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
+import Radium, { StyleRoot } from 'radium';
 
 import User from '../../../../shared-components/user/components/user';
 
@@ -39,50 +40,17 @@ const styles = {
   }
 };
 
+@Radium
 class View extends React.Component {
 
-  constructor() {
-    super();
-
-    this.state = {
-      user: { 
-        id: 1,
-        name: 'Juan Dela Cruz',
-        description: 'Tall, dark and handsome.',
-        todos: [
-          { task: 'Write code.', done: true, date: new Date('7/29/2017') },
-          { task: 'Merge pull request', done: false, date: new Date('7/29/2017') },
-          { task: 'Raise an issue', done: false, date: new Date('7/30/2017') }
-        ]
-      }
-    }
-  }
-
   onTagAsDoneUndone(todo) {
-    this.setState({
-      user: {
-        ...this.state.user,
-        todos: this.state.user.todos.map(t => {
-          if (t == todo) t.done = !t.done;
-
-          return t;
-        })
-      }
-    });
+    const { tagAsDoneUndone, user } = this.props;
+    tagAsDoneUndone(user.id, todo);
   }
 
   onRemoveTask(todo) {
-    this.setState({
-      user: {
-        ...this.state.user,
-        todos: this.state.user.todos.filter(t => {
-          if (t == todo)
-            return null;
-
-          return t;
-        })
-      }
-    });
+    const { removeTodo, user } = this.props;
+    removeTodo(user.id, todo);
   }
 
   addTodo() {
@@ -93,7 +61,7 @@ class View extends React.Component {
     const { user } = this.props;
 
     return (
-      <div style={styles.container}>
+      <StyleRoot style={styles.container}>
           <div style={styles.container.userContainer}>
             <Paper style={styles.container.userContainer.backContainer}>
               <Link to="/" style={styles.container.userContainer.backContainer.back}>
@@ -112,7 +80,7 @@ class View extends React.Component {
             onTouchTap={this.addTodo.bind(this)}>
             <ContentAdd />
           </FloatingActionButton>
-      </div>
+      </StyleRoot>
     );
   }
 

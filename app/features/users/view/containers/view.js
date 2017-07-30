@@ -18,14 +18,18 @@ class UsersViewContainer extends React.Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { user, actions } = this.props;
+    const { tagAsDoneUndone, removeTodo } = actions;
 
     if (!user) {
       return null;
     }
 
     return (
-      <View user={user} />
+      <View
+        user={user}
+        tagAsDoneUndone={tagAsDoneUndone}
+        removeTodo={removeTodo} />
     );
   }
   

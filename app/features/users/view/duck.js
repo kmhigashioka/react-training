@@ -1,4 +1,6 @@
 const USERS_VIEW_GET_USER = 'USERS_VIEW_GET_USER';
+const USERS_VIEW_TAG_AS_DONE_UNDONE = 'USERS_VIEW_TAG_AS_DONE_UNDONE';
+const USERS_VIEW_REMOVE_TODO = 'USERS_VIEW_REMOVE_TODO';
 
 export default (state={
   user: null
@@ -23,3 +25,23 @@ export const getUser = (userId, users) => {
     payload: user
   };
 }
+
+export const tagAsDoneUndone = (userId, todo) => {
+  return {
+    type: USERS_VIEW_TAG_AS_DONE_UNDONE,
+    payload: {
+      userId,
+      todo
+    }
+  }
+};
+
+export const removeTodo = (userId, todo) => {
+  return {
+    type: USERS_VIEW_REMOVE_TODO,
+    payload: {
+      userId,
+      todo
+    }
+  }
+};

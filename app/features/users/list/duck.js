@@ -1,3 +1,6 @@
+const USERS_VIEW_TAG_AS_DONE_UNDONE = 'USERS_VIEW_TAG_AS_DONE_UNDONE';
+const USERS_VIEW_REMOVE_TODO = 'USERS_VIEW_REMOVE_TODO';
+
 export default (state={
   users: [
     { 
@@ -22,6 +25,41 @@ export default (state={
   ]
 }, action) => {
   switch(action.type) {
+
+
+    case USERS_VIEW_TAG_AS_DONE_UNDONE:
+      state = {
+        ...state,
+        users: state.users.map(t => {
+          if (t.id == action.payload.userId) {
+            var todoIndex = t.todos.indexOf(action.payload.todo);
+            t.todos = t.todos.map((u, i) => {
+              if (i == todoIndex) {
+                u.done = !u.done;
+              }
+              return u;
+            });
+          }
+          return t;
+        })
+      }
+      break;
+
+    
+    case USERS_VIEW_REMOVE_TODO:
+      state = {
+        ...state,
+        users: state.users.map(t => {
+          if (t.id == action.payload.userId) {
+            var todoIndex = t.todos.indexOf(action.payload.todo);
+            t.todos = t.todos.filter((u, i) => todoIndex != i);
+          }
+          return t;
+        })
+      }
+      break;
+
+
     default: state;
   }
   return state;
