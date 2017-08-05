@@ -17,19 +17,9 @@ class UsersNewContainer extends React.Component {
     getUser(routeParams.id, users);
   }
 
-  onSubmit({task, date}) {
+  render() {
     const { user, actions } = this.props;
     const { newTodo } = actions;
-
-    newTodo(user.id, {
-      task,
-      date,
-      done: false
-    });
-  }
-
-  render() {
-    const { user } = this.props;
 
     if (!user) {
       return null;
@@ -38,7 +28,7 @@ class UsersNewContainer extends React.Component {
     return (
       <New
         user={user}
-        onSubmit={this.onSubmit.bind(this)} />
+        newTodo={newTodo} />
     );
   }
   

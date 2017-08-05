@@ -84,15 +84,19 @@ class New extends React.Component {
     })
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    const { user, handleSubmit } = this.props;
+  onSubmitSuccess({task, date}) {
+    const { user, newTodo } = this.props;
 
-    handleSubmit();
+    newTodo(user.id, {
+      task,
+      date,
+      done: false
+    });
+
     this.setState({
       openSnackbar: true,
       snackbarMessage: `Successfully added todo for ${user.name}.`
-    })
+    });
   }
 
   render() {
@@ -102,7 +106,7 @@ class New extends React.Component {
       <StyleRoot style={styles.container}>
         <div style={styles.container.userContainer}>
           <Paper>
-            <form onSubmit={this.handleSubmit.bind(this)}>
+            <form onSubmit={handleSubmit(this.onSubmitSuccess.bind(this))}>
               <section style={styles.container.userContainer.headerContainer}>
                 <h2 style={styles.container.userContainer.headerContainer.header}>Add Todo</h2>
                 <small>Add todo for {user.name}.</small>
