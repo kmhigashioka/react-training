@@ -8,6 +8,7 @@ import Radium, { StyleRoot } from 'radium';
 
 import User from '../../../../shared-components/user/components/user';
 import Edit from '../containers/edit';
+import AlertDialog from '../../../../shared-components/alert-dialog/components/alert-dialog';
 
 const styles = {
   container: {
@@ -49,7 +50,8 @@ class View extends React.Component {
 
     this.state = {
       openEdit: false,
-      selectedTodo: null
+      selectedTodo: null,
+      openDelete: false
     };
   }
 
@@ -59,8 +61,10 @@ class View extends React.Component {
   }
 
   onRemoveTask(todo) {
-    const { removeTodo, user } = this.props;
-    removeTodo(user.id, todo);
+    this.setState({
+      openDelete: true,
+      selectedTodo: todo
+    });
   }
 
   addTodo() {
@@ -81,6 +85,19 @@ class View extends React.Component {
       openEdit: false, 
       selectedTodo: null
     });
+  }
+
+  onCloseDeleteTodo() {
+    this.setState({
+      openDelete: false,
+      selectedTodo: null
+    });
+  }
+
+  onHandleYesRemoveTask() {
+    const { removeTodo, user } = this.props;
+    removeTodo(user.id, this.state.selectedTodo);
+    this.onCloseDeleteTodo();
   }
 
   render() {
@@ -107,6 +124,12 @@ class View extends React.Component {
             handleClose={this.onCloseEditTodo.bind(this)}
             todo={this.state.selectedTodo}
             user={user} />
+          <AlertDialog
+            title="Remove Task"
+            open={this.state.openDelete}
+            handleClose={this.onCloseDeleteTodo.bind(this)}
+            handleYes={this.onHandleYesRemoveTask.bind(this)}
+            message="This action is cannot be undone. Do you want to proceed?" />
           <FloatingActionButton
             style={styles.container.fab}
             onTouchTap={this.addTodo.bind(this)}>
