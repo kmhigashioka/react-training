@@ -7,6 +7,7 @@ import ChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 import Radium, { StyleRoot } from 'radium';
 
 import User from '../../../../shared-components/user/components/user';
+import Edit from '../containers/edit';
 
 const styles = {
   container: {
@@ -43,6 +44,15 @@ const styles = {
 @Radium
 class View extends React.Component {
 
+  constructor() {
+    super();
+
+    this.state = {
+      openEdit: false,
+      selectedTodo: null
+    };
+  }
+
   onTagAsDoneUndone(todo) {
     const { tagAsDoneUndone, user } = this.props;
     tagAsDoneUndone(user.id, todo);
@@ -57,6 +67,20 @@ class View extends React.Component {
     const { user } = this.props;
 
     browserHistory.push(`/users/${user.id}/todos/new`);
+  }
+
+  onEditTodo(todo) {
+    this.setState({
+      openEdit: true,
+      selectedTodo: todo
+    });
+  }
+
+  onCloseEditTodo() {
+    this.setState({
+      openEdit: false, 
+      selectedTodo: null
+    });
   }
 
   render() {
@@ -75,8 +99,14 @@ class View extends React.Component {
             <User
               user={user}
               onRemoveTask={this.onRemoveTask.bind(this)}
-              onTagAsDoneUndone={this.onTagAsDoneUndone.bind(this)} />
+              onTagAsDoneUndone={this.onTagAsDoneUndone.bind(this)}
+              onEditTodo={this.onEditTodo.bind(this)} />
           </div>
+          <Edit
+            open={this.state.openEdit}
+            handleClose={this.onCloseEditTodo.bind(this)}
+            todo={this.state.selectedTodo}
+            user={user} />
           <FloatingActionButton
             style={styles.container.fab}
             onTouchTap={this.addTodo.bind(this)}>

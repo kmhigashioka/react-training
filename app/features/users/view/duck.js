@@ -1,6 +1,7 @@
 const USERS_VIEW_GET_USER = 'USERS_VIEW_GET_USER';
 const USERS_VIEW_TAG_AS_DONE_UNDONE = 'USERS_VIEW_TAG_AS_DONE_UNDONE';
 const USERS_VIEW_REMOVE_TODO = 'USERS_VIEW_REMOVE_TODO';
+const USERS_VIEW_EDIT_TODO = 'USERS_VIEW_EDIT_TODO';
 
 export default (state={
   user: null
@@ -45,3 +46,14 @@ export const removeTodo = (userId, todo) => {
     }
   }
 };
+
+export const editTodo = (userId, todo, newTodo) => {
+  return {
+    type: USERS_VIEW_EDIT_TODO,
+    payload: {
+      userId,
+      todo,
+      newTodo
+    }
+  }
+}

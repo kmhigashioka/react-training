@@ -1,6 +1,7 @@
 const USERS_VIEW_TAG_AS_DONE_UNDONE = 'USERS_VIEW_TAG_AS_DONE_UNDONE';
 const USERS_VIEW_REMOVE_TODO = 'USERS_VIEW_REMOVE_TODO';
 const USERS_NEW_TODO = 'USERS_NEW_TODO';
+const USERS_VIEW_EDIT_TODO = 'USERS_VIEW_EDIT_TODO';
 
 export default (state={
   users: [
@@ -67,6 +68,23 @@ export default (state={
         users: state.users.map(t => {
           if (t.id == action.payload.userId) {
             t.todos = t.todos.concat(action.payload.todo);
+          }
+          return t;
+        })
+      }
+      break;
+
+
+    case USERS_VIEW_EDIT_TODO:
+      state = {
+        ...state,
+        users: state.users.map(t => {
+          if (t.id == action.payload.userId) {
+            t.todos = t.todos.map(u => {
+              return u == action.payload.todo
+                ? action.payload.newTodo
+                : u;
+            });
           }
           return t;
         })

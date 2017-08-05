@@ -66,8 +66,14 @@ class User extends React.Component {
     onRemoveTask(todo);
   }
 
+  onEditTodo(todo) {
+    const { onEditTodo } = this.props;
+
+    onEditTodo(todo);
+  }
+
   render() {
-    const { user, type } = this.props;
+    const { user, type, onEditTodo } = this.props;
 
     return (
       <StyleRoot>
@@ -112,6 +118,7 @@ class User extends React.Component {
                             <MoreVertIcon color={grey400} />
                         </IconButton>
                       }>
+                      <MenuItem onTouchTap={this.onEditTodo.bind(this, t)}>Edit Todo</MenuItem>
                       <MenuItem onTouchTap={this.tagAsDoneUndone.bind(this, t)}>Tag as {t.done ? 'undone' : 'done'}</MenuItem>
                       <MenuItem onTouchTap={this.removeTask.bind(this, t)}>Remove</MenuItem>
                     </IconMenu>
