@@ -91,11 +91,12 @@ class New extends React.Component {
       task,
       date,
       done: false
-    });
-
-    this.setState({
-      openSnackbar: true,
-      snackbarMessage: `Successfully added todo for ${user.name}.`
+    },
+    () => {
+      this.setState({
+        openSnackbar: true,
+        snackbarMessage: `Successfully added todo for ${user.name}.`
+      });
     });
   }
 
