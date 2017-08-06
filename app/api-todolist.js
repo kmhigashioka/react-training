@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:29224',
+  baseURL: __API_TODOLIST__,
 });
 
 export default instance;
