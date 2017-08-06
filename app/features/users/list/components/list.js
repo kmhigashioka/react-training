@@ -40,6 +40,12 @@ class UsersList extends React.Component {
     };
   }
 
+  componentWillReceiveProps({users}) {
+    this.setState({
+      filteredUsers: users
+    });
+  }
+
   filterUserWithTask(event) {
     const { users } = this.props;
 

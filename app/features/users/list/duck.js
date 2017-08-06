@@ -2,29 +2,12 @@ const USERS_VIEW_TAG_AS_DONE_UNDONE = 'USERS_VIEW_TAG_AS_DONE_UNDONE';
 const USERS_VIEW_REMOVE_TODO = 'USERS_VIEW_REMOVE_TODO';
 const USERS_NEW_TODO = 'USERS_NEW_TODO';
 const USERS_VIEW_EDIT_TODO = 'USERS_VIEW_EDIT_TODO';
+const USERS_LIST_GET_USERS_REQUEST = 'USERS_LIST_GET_USERS_REQUEST';
+const USERS_LIST_GET_USERS_SUCCESS = 'USERS_LIST_GET_USERS_SUCCESS';
 
 export default (state={
-  users: [
-    { 
-      id: 1,
-      name: 'Juan Dela Cruz',
-      description: 'Tall, dark and handsome.',
-      todos: [
-        { task: 'Write code.', done: true, date: new Date('7/29/2017') },
-        { task: 'Merge pull request', done: false, date: new Date('7/29/2017') },
-        { task: 'Raise an issue', done: false, date: new Date('7/30/2017') }
-      ]
-    },
-    { 
-      id: 2,
-      name: 'April Santos',
-      description: 'Strong and independent woman.',
-      todos: [
-        { task: 'Eat some fries', done: true, date: new Date('7/29/2017') },
-        { task: 'Study React', done: false, date: new Date('7/30/2017') }
-      ]
-    }
-  ]
+  users: [],
+  getUsersRequestPending: true
 }, action) => {
   switch(action.type) {
 
@@ -92,7 +75,37 @@ export default (state={
       break;
 
 
+    case USERS_LIST_GET_USERS_REQUEST:
+      state = {
+        ...state,
+        getUsersRequestPending: true
+      }
+      break;
+
+
+    case USERS_LIST_GET_USERS_SUCCESS:
+      state = {
+        ...state,
+        users: action.payload,
+        getUsersRequestPending: false
+      }
+      break;
+
+
     default: state;
   }
   return state;
+};
+
+export const getUsers = () => (dispatch, getState, {apiTodoList}) => {
+  dispatch({
+    type: USERS_LIST_GET_USERS_REQUEST
+  });
+
+  apiTodoList.get('/api/users').then((res) => {
+    dispatch({
+      type: USERS_LIST_GET_USERS_SUCCESS,
+      payload: res.data
+    });
+  });
 };

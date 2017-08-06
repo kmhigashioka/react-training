@@ -10,6 +10,12 @@ import List from '../components/list';
 )
 class UsersListContainer extends React.Component {
 
+  componentWillMount() {
+    const { actions: { getUsers } } = this.props;
+
+    getUsers();
+  }
+
   render() {
     const { users } = this.props;
 

@@ -18,10 +18,10 @@ class UsersViewContainer extends React.Component {
   }
 
   render() {
-    const { user, actions } = this.props;
+    const { user, actions, getUserRequestPending } = this.props;
     const { tagAsDoneUndone, removeTodo } = actions;
 
-    if (!user) {
+    if (getUserRequestPending) {
       return null;
     }
 
