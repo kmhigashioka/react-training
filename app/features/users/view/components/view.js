@@ -96,8 +96,7 @@ class View extends React.Component {
 
   onHandleYesRemoveTask() {
     const { removeTodo, user } = this.props;
-    removeTodo(user.id, this.state.selectedTodo);
-    this.onCloseDeleteTodo();
+    removeTodo(user.id, this.state.selectedTodo.id, this.onCloseDeleteTodo.bind(this));
   }
 
   render() {
