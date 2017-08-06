@@ -1,8 +1,9 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
+import apiTodoList from './api-todolist';
 
-const middleware = applyMiddleware(thunk);
+const middleware = applyMiddleware(thunk.withExtraArgument({apiTodoList}));
 
 const store = createStore(
   reducers,
