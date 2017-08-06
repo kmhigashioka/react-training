@@ -5,16 +5,16 @@ import * as duck from '../duck';
 import New from '../components/new';
 
 @connect(
-  state => ({...state.usersNewReducer, users: state.usersListReducer.users}),
+  state => state.usersNewReducer,
   dispatch => ({actions: bindActionCreators(duck, dispatch)})
 )
 class UsersNewContainer extends React.Component {
 
   componentDidMount() {
-    const { users, routeParams, actions } = this.props;
+    const { routeParams, actions } = this.props;
     const { getUser } = actions;
 
-    getUser(routeParams.id, users);
+    getUser(routeParams.id);
   }
 
   render() {

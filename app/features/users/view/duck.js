@@ -18,13 +18,14 @@ export default (state={
   return state;
 };
 
-export const getUser = (userId, users) => {
+export const getUser = (userId) => (dispatch, getState) => {
+  const { usersListReducer: { users } } = getState();
   const user = users.filter(t => t.id == userId)[0];
 
-  return {
+  dispatch({
     type: USERS_VIEW_GET_USER,
     payload: user
-  };
+  });
 }
 
 export const tagAsDoneUndone = (userId, todo) => {

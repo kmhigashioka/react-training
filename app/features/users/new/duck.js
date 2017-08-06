@@ -20,13 +20,14 @@ export default (state={
   return state;
 };
 
-export const getUser = (userId, users) => {
+export const getUser = (userId) => (dispatch, getState) => {
+  const { usersListReducer: { users } } = getState();
   const user = users.filter(t => t.id == userId)[0];
 
-  return {
+  dispatch({
     type: USERS_NEW_GET_USER,
     payload: user
-  };
+  });
 };
 
 export const newTodo = (userId, todo) => {

@@ -11,10 +11,10 @@ import View from '../components/view';
 class UsersViewContainer extends React.Component {
 
   componentDidMount() {
-    const { users, routeParams, actions } = this.props;
+    const { routeParams, actions } = this.props;
     const { getUser } = actions;
 
-    getUser(routeParams.id, users);
+    getUser(routeParams.id);
   }
 
   render() {
